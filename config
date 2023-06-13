@@ -96,7 +96,14 @@ do
 		--no-cluster) shift; fix CLUSTER "";;
 		--print) ONLY_PRINT=true;;
 		--no-wait) RUN_WAIT=false;;
-		*) echo "Unknown option '$1'"; exit 2;;
+		-*) echo "Unknown option '$1'"; exit 2;;
+		*=*)
+			VAR="${1%%=*}"
+			VAL="${1#*=}"
+			echo "Setting $VAR from commandline argument to: $VAL"
+			fix "$VAR" "$VAL"
+			;;
+		*) echo "Unknown argument '$1'"; exit 2;;
 	esac
 	shift
 done
