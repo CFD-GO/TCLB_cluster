@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if test -z "$BASH_SOURCE"
+then
+	echo "unsupported shell"
+	exit -1;
+fi
+
+if test "$BASH_SOURCE" == "$0"
+then
+	echo "This script is designed to be source'd in bash"
+	exit 0;
+fi
+
+set -e
+
+PP=$(dirname $BASH_SOURCE)
+test -f $PP/conf.ini || exit -1
+. $PP/lib.bash
+source_conf
+
+ONLY_PRINT=false
+RUN_WAIT=false
+for arg
+do
+	shift
+	case "$arg" in
+		--print) ONLY_PRINT=true;;
+		*) set -- "$@" "$arg";;
+	esac
+done
+set -e
+
