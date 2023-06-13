@@ -19,7 +19,12 @@ fix RUN_GPU "y"
 
 adv MAIN_PARTITION "plgrid-gpu-a100"
 def MODULES_RUN "GCC/11.2.0 GCCcore/11.2.0 libtirpc/1.3.2 OpenMPI/4.1.2"
-def CONFOPT "--disable-rinside"
+function RUN_GPU_CHECK {
+	case "$RUN_GPU" in
+	y) def CONFOPT "--with-cuda-arch=sm_80 --disable-rinside" ;;
+	*) echo wrong value of RUN_GPU; exit -1 ;;
+	esac
+}
 adv MAX_TASKS_PER_NODE 4
 adv MAX_TASKS_PER_NODE_FOR_COMPILATION 24
 adv CORES_PER_TASK_FULL 1
