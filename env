@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+PP=$(dirname $0)
+test -f $PP/conf.ini || exit -1
+. $PP/lib.bash
+source_conf
+
+env_prepare
