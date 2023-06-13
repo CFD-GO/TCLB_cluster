@@ -74,6 +74,7 @@ function CORES_PER_TASK_CHECK {
 function CORES_PER_TASK_FULL_CHECK {
 	check_integer "$1"
 }
+
 def RUN_INSTALL_RDEP "y" "yn"
 def RUN_CONFIGURE "y" "yn"
 
@@ -140,9 +141,16 @@ ask PREPARE_MAKE "What commands to run before running make"
 ask PREPARE_RUN "What commands to run before running TCLB"
 ask RUN_COMMAND "What command to use to run MPI application (runmpi|srun|aprun)"
 ask SINGULARITY_COMMAND "What command to use to run singularity container (singularity exec path_to_image.sif | singularity exec --nv path_to_image.sif)"
+ask LAMMPS "Path to LAMMPS/LIGGGHTS installation (if any)"
 ask RUN_INSTALL_RDEP "Do you want to install needed R packages now?"
 ask RUN_CONFIGURE "Do you want to run ./configure now?"
 save_conf
+
+ADDCONFOPT=""
+if ! test -z "$LAMMPS"
+then
+	ADDCONFOPT="$ADDCONFOPT --with-lammps=$LAMMPS"
+fi
 
 source_engine $ENGINE_CONF
 
@@ -166,7 +174,7 @@ then
 		if test "$RUN_CONFIGURE" == "y"
 		then
 			echo "make configure"
-			echo "./configure $CONFOPT"
+			echo "./configure $CONFOPT $ADDCONFOPT"
 		fi
 	) >tmp.job.scr
 	q_run tmp.job.scr
