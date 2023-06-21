@@ -138,7 +138,8 @@ function ask {
 		VAL="$DEF"
 		;;
 	esac
-	eval "$VAR=\"$VAL\""
+#	eval "$VAR=\"$VAL\""
+	eval $VAR=$(printf "%q" "$VAL")
 	if test "x$(type -t "$CHECK")" == "xfunction"
 	then
 		if test "x$ASK" != "xfix"
@@ -151,8 +152,8 @@ function ask {
 	fi
 	echo >>$PP/new.conf.ini
 	echo "$COMM" | sed 's/^/# /' >>$PP/new.conf.ini
-	echo "${VAR}=\"${VAL}\"" >>$PP/new.conf.ini
-	echo "${VAR}_OLDDEF=\"${DEF}\"" >>$PP/new.conf.ini
+	echo "${VAR}=$(printf "%q" "${VAL}")" >>$PP/new.conf.ini
+	echo "${VAR}_OLDDEF=$(printf "%q" "${DEF}")" >>$PP/new.conf.ini
 }
 
 function defgrant {
