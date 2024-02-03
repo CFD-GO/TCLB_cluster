@@ -18,9 +18,9 @@ function RUN_GPU_CHECK {
 		adv MAIN_PARTITION "gpuvolta"
 		def MODULES_BASE "openmpi/4.0.2 R/3.6.1 cuda/10.1"
 		# from Bryce script: hdf5/1.10.5p python3/3.7.4 python3-as-python paraview/5.8.0-mesa
-		def CONFOPT "--with-cuda-arch=sm_30"
+		def CONFOPT "--with-cuda-arch=sm_70 --disable-rinside"
 		adv MAX_TASKS_PER_NODE 4
-		adv MAX_TASKS_PER_NODE_FOR_COMPILATION 48
+		adv MAX_TASKS_PER_NODE_FOR_COMPILATION 4
 		adv CORES_PER_TASK 12
 		adv CORES_PER_TASK_FULL 12
 		def MEMORY_PER_TASK 32
