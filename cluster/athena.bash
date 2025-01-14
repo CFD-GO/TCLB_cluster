@@ -18,7 +18,7 @@ fix SINGULARITY_COMMAND ""
 fix RUN_GPU "y"
 
 adv MAIN_PARTITION "plgrid-gpu-a100"
-def MODULES_RUN "GCC/11.2.0 GCCcore/11.2.0 libtirpc/1.3.2 OpenMPI/4.1.2"
+def MODULES_RUN "GCC/11.3.0 GCCcore/11.3.0 libtirpc/1.3.2 OpenMPI/4.1.4 R/4.2.3"
 function RUN_GPU_CHECK {
 	case "$RUN_GPU" in
 	y) def CONFOPT "--with-cuda-arch=sm_80 --disable-rinside" ;;
